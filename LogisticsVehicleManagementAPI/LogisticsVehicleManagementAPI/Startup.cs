@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,14 @@ namespace LogisticsVehicleManagementAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddSingleton<IVehicleManagement, VehicleManagement>();
+
+            //配置跨域处理，允许所有来源：
+            services.AddCors(options =>
+            options.AddPolicy("cor",
+            p => p.AllowAnyOrigin())
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -25,6 +34,7 @@ namespace LogisticsVehicleManagementAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("cor");
 
             app.UseRouting();
 
