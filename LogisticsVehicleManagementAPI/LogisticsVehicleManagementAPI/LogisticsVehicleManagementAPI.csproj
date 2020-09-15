@@ -12,6 +12,7 @@
     <Folder Include="Group\Shenwenjie\" />
     <Folder Include="Group\Liukang\" />
     <Folder Include="Group\Guokunlong\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
