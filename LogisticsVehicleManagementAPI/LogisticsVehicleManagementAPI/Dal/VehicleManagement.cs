@@ -10,7 +10,7 @@ namespace Dal
         SqlSugarClient db = new SqlSugarClient(
             new ConnectionConfig
             {
-                ConnectionString = "server=.;uid=sa;pwd=1234321;database=WeTao",
+                ConnectionString = "server=.;uid=sa;pwd=1234321;database=VehicleManagementSystem",
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true,
                 InitKeyType = InitKeyType.Attribute
