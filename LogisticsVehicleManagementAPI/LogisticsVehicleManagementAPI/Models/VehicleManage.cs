@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LogisticsVehicleManagementAPI.Models
 {
-    public class VehicleManageModel
+    public class VehicleManage
     {
         public int VehicleManageId { get; set; }//主键
         public string Licenseplatenumber { get; set; }//车牌号

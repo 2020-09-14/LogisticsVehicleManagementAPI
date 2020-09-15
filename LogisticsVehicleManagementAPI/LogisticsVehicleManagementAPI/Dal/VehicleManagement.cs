@@ -16,10 +16,18 @@ namespace Dal
                 IsAutoCloseConnection = true,
                 InitKeyType = InitKeyType.Attribute
             });
+<<<<<<< HEAD
+
+        public List<VehicleManage> Show()
+        {
+
+            List<VehicleManage> list = db.Queryable<VehicleManage>().ToList(); ;
+=======
         //接口生成承运单方法
         public List<TheCarrierSingle> theCarrierSingles()
         {
             List<TheCarrierSingle> list = db.Queryable<TheCarrierSingle>().ToList();
+>>>>>>> b37c3d8419e4e73a91487ccddf96683d93bf25ec
             return list;
         }
     }

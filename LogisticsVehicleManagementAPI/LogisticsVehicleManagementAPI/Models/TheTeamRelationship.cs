@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LogisticsVehicleManagementAPI.Models
 {
-    public class TheTeamRelationshipModel
+    public class TheTeamRelationship
     {
         public int Tid   { get; set; }//主键
         public int Fidd  { get; set; }//车辆外键

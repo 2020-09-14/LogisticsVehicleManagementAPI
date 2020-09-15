@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LogisticsVehicleManagementAPI.Models
 {
-    public class FleetManagementModel
+    public class FleetManagement
     {
         
         public int Fid { get; set; }//主键
