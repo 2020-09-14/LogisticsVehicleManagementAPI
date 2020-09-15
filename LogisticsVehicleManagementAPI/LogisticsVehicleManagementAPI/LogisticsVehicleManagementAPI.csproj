@@ -5,17 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controller\" />
     <Folder Include="Group\Tiantengfei\" />
     <Folder Include="Group\Wangchao\" />
     <Folder Include="Group\Zhangchunyv\" />
     <Folder Include="Group\Shenwenjie\" />
     <Folder Include="Group\Liukang\" />
     <Folder Include="Group\Guokunlong\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Dal\Dal.csproj" />
   </ItemGroup>
 
   <ItemGroup>
