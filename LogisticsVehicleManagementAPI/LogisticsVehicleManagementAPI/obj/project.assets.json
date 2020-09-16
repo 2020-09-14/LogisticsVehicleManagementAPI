@@ -6227,23 +6227,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MECHREVO\\.nuget\\packages\\": {},
+    "C:\\Users\\86176\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\专高五练习\\哈哈哈\\小组项目\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
+      "projectUniqueName": "C:\\Users\\86176\\Desktop\\新建文件夹\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
       "projectName": "LogisticsVehicleManagementAPI",
-      "projectPath": "E:\\专高五练习\\哈哈哈\\小组项目\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
-      "packagesPath": "C:\\Users\\MECHREVO\\.nuget\\packages\\",
-      "outputPath": "E:\\专高五练习\\哈哈哈\\小组项目\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\obj\\",
+      "projectPath": "C:\\Users\\86176\\Desktop\\新建文件夹\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
+      "packagesPath": "C:\\Users\\86176\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\86176\\Desktop\\新建文件夹\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\MECHREVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\86176\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

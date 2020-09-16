@@ -2,6 +2,7 @@
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace Dal
 {
@@ -14,15 +15,23 @@ namespace Dal
                 ConnectionString = "server=DESKTOP-HNEDNFK;uid=sa;pwd=1234321;database=VehicleManagementSystem",
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true,
-                InitKeyType = InitKeyType.Attribute
+               
             });
 //<<<<<<< HEAD
-
+        //显示车辆
         public List<VehicleManage> Show()
         {
 
             List<VehicleManage> list = db.Queryable<VehicleManage>().ToList();
             return list;
+        }
+        //添加车辆
+        public int AddCar(VehicleManage m)
+        {
+
+            var sql = new VehicleManage() { Licenseplatenumber = m.Licenseplatenumber, ModelofCar = m.ModelofCar, Manufacturer = m.Manufacturer, CarColour = m.CarColour, PurchasePrice = m.PurchasePrice, Tonnage = m.Tonnage, Displacement = m.Displacement, VehicleType = m.VehicleType, Status = m.Status };
+            int i = db.Insertable(sql).ExecuteCommand();
+            return i;
         }
 
 //=======
