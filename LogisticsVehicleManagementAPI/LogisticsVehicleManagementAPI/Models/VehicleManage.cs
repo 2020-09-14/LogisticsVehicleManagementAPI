@@ -16,7 +16,7 @@ namespace LogisticsVehicleManagementAPI.Models
         public int Tonnage { get; set; }//吨位，
         public string Displacement { get; set; }//功率排气量，
         public string VehicleType { get; set; }//车辆种类，
-        public string Img { get; set; }//图片，
+        //public string Img { get; set; }//图片，
         public bool Status { get; set; }//判断车辆是否在使用，
 
     }
