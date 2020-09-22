@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Dal;
+using LogisticsVehicleManagementAPI.Helper;
 using LogisticsVehicleManagementAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace LogisticsVehicleManagementAPI.Controller
 {
@@ -19,10 +23,20 @@ namespace LogisticsVehicleManagementAPI.Controller
             _vehicleManagement = vehicleManagement;
         }
         [HttpGet]
-        public IActionResult GettheCarrierSingles()
+        public IActionResult  GettheCarrierSingles(int page,int limit,[FromQuery] string theCarrierSingleNumber,string ConsigneeTel)
         {
-            List<TheCarrierSingle> theCarrierSingles = _vehicleManagement.theCarrierSingles();
-            return Ok(theCarrierSingles);
+            List<TheCarrierSingle> theCarrierSingles = _vehicleManagement.theCarrierSingles(page,limit,theCarrierSingleNumber,ConsigneeTel);
+  
+            JsonData json = new JsonData() { code = 0, msg = "", count = 100, data = theCarrierSingles };
+            return Ok(json);
+        }
+        [Route("/api/Del")]
+        [HttpPost]
+        public IActionResult DeltheCarrierSingles([FromQuery]string ids)
+        {
+           
+            int code = _vehicleManagement.DeltheCarrierSingles(ids);
+            return Ok(code);
         }
     }
 }

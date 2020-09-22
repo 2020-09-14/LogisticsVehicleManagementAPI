@@ -5,12 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Group\Tiantengfei\" />
-    <Folder Include="Group\Wangchao\" />
-    <Folder Include="Group\Zhangchunyv\" />
-    <Folder Include="Group\Shenwenjie\" />
-    <Folder Include="Group\Liukang\" />
-    <Folder Include="Group\Guokunlong\" />
+    <Compile Remove="Group\**" />
+    <Content Remove="Group\**" />
+    <EmbeddedResource Remove="Group\**" />
+    <None Remove="Group\**" />
   </ItemGroup>
 
   <ItemGroup>

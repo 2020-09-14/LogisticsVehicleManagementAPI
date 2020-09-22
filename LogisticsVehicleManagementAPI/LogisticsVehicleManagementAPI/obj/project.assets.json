@@ -3747,7 +3747,6 @@
       "path": "system.io.compression.zipfile/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -6227,23 +6226,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\86176\\.nuget\\packages\\": {},
+    "C:\\Users\\T\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\86176\\Desktop\\新建文件夹\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
+      "projectUniqueName": "C:\\Users\\T\\Desktop\\项目API\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
       "projectName": "LogisticsVehicleManagementAPI",
-      "projectPath": "C:\\Users\\86176\\Desktop\\新建文件夹\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
-      "packagesPath": "C:\\Users\\86176\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\86176\\Desktop\\新建文件夹\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\obj\\",
+      "projectPath": "C:\\Users\\T\\Desktop\\项目API\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI.csproj",
+      "packagesPath": "C:\\Users\\T\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\T\\Desktop\\项目API\\LogisticsVehicleManagementAPI\\LogisticsVehicleManagementAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\86176\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\T\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

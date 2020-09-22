@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
 
+
 namespace Dal
 {
     public class VehicleManagement : IVehicleManagement
@@ -19,10 +20,13 @@ namespace Dal
                 ConnectionString = "server=DESKTOP-HNEDNFK;uid=sa;pwd=1234321;database=VehicleManagementSystem",
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true,
-               
+
+              
             });
+
         //显示车辆
         public List<VehicleManage> Show(string name="")
+
         {
 
             List<VehicleManage> list = db.Queryable<VehicleManage>().ToList();
@@ -38,15 +42,34 @@ namespace Dal
         public int AddCar([FromForm]VehicleManage m)
         {
 
+
+
+
             var sql = new VehicleManage() { Licenseplatenumber = m.Licenseplatenumber, ModelofCar = m.ModelofCar, Manufacturer = m.Manufacturer, CarColour = m.CarColour, PurchasePrice = m.PurchasePrice, Tonnage = m.Tonnage, Displacement = m.Displacement, VehicleType = m.VehicleType, Status = m.Status };
             int i = db.Insertable(sql).ExecuteCommand();
             return i;
         }
+
         //接口生成承运单方法
-        public List<TheCarrierSingle> theCarrierSingles()
+        public List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel)
         {
             List<TheCarrierSingle> list = db.Queryable<TheCarrierSingle>().ToList();
-//>>>>>>> b37c3d8419e4e73a91487ccddf96683d93bf25ec
+            if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
+            {
+                theCarrierSingleNumber = theCarrierSingleNumber.Trim();
+                list = list.Where(t => t.TheCarrierSingleNumber == theCarrierSingleNumber).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(ConsigneeTel))
+            {
+                ConsigneeTel = ConsigneeTel.Trim();
+                list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
+            }
+            list = list.Skip((page - 1) * limit).Take(limit).ToList();
+            var model = new
+            {
+                page = list,
+                limit = limit,
+            };
             return list;
         }
         //删除车辆(假删)
@@ -135,9 +158,24 @@ namespace Dal
             return j;
             
         }
-        
-
-        
+     
+        //删除承运单
+        public int DeltheCarrierSingles(string ids)
+        {
+            string[] aa = ids.Split(',');
+            int[] b = new int[aa.Length];
+            for (int i = 0; i < aa.Length; i++)
+            {
+                int.TryParse(aa[i], out b[i]);
+            }
+            int flag = 0;
+            for (int i = 0; i < b.Length; i++)
+            {
+                flag+= db.Deleteable<TheCarrierSingle>().In(new int[] { b[i] }).ExecuteCommand();
+            }
+     
+            return flag;
+        }
     }
 }
 
