@@ -9,6 +9,23 @@ namespace Dal
     public interface IVehicleManagement
     {
 
+         
+
+        //显示驾驶员
+        List<Driver> GetDrivers(string Dname);
+
+        //添加驾驶员
+        int Add(Driver driver);
+
+        //删除驾驶员
+        int DelDeriver(int dId);
+
+        //更新驾驶员
+        int UptDeriver(Driver driver);
+
+        //详情
+        List<Driver> GetDetails(int id);
+
 
     
 
@@ -28,7 +45,9 @@ namespace Dal
         string RemoveMotorcade(string ids);
         //添加车队 同添加关系表（多条）
         int AddModtorcade(FleetManagement f, string ids);
+
      
+
 
 
 

@@ -1,10 +1,13 @@
-﻿using Google.Protobuf.WellKnownTypes;
 using LogisticsVehicleManagementAPI.Models;
+﻿using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using System.Xml.Linq;
+
 using System.Net.Http.Headers;
 using System.Threading;
 
@@ -21,8 +24,14 @@ namespace Dal
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true,
 
-              
+
+                //InitKeyType = InitKeyType.Attribute
             });
+
+       
+
+              
+
 
         //显示车辆
         public List<VehicleManage> Show(string name="")
@@ -38,6 +47,7 @@ namespace Dal
             }
             return list;
         }
+
         //添加车辆
         public int AddCar([FromForm]VehicleManage m)
         {
@@ -54,22 +64,61 @@ namespace Dal
         public List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel)
         {
             List<TheCarrierSingle> list = db.Queryable<TheCarrierSingle>().ToList();
-            if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
+
+            return list;
+        }
+        //显示驾驶员
+        public List<Driver> GetDrivers(string Dname) 
+        {
+            List<Driver> list = db.Queryable<Driver>().ToList();
+            //判断是否为空
+            if (!string.IsNullOrEmpty(Dname))
             {
-                theCarrierSingleNumber = theCarrierSingleNumber.Trim();
-                list = list.Where(t => t.TheCarrierSingleNumber == theCarrierSingleNumber).ToList();
+                 list= db.Queryable<Driver>().Where(x => x.Dname.Contains(Dname)).ToList();
             }
-            if (!string.IsNullOrWhiteSpace(ConsigneeTel))
-            {
-                ConsigneeTel = ConsigneeTel.Trim();
-                list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
-            }
-            list = list.Skip((page - 1) * limit).Take(limit).ToList();
-            var model = new
-            {
-                page = list,
-                limit = limit,
-            };
+            return list;
+        }
+        //添加驾驶员
+        public int Add(Driver driver)
+        {
+            int i = db.Insertable(driver).ExecuteCommand();
+            return i;
+        }
+        //删除驾驶员信息
+        public int DelDeriver(int DId)
+        {
+            Driver driver = new Driver { DBit = false };
+            int n = db.Updateable(driver).Where(p => p.DId == DId).ExecuteCommand();
+            return n;
+        }
+        //更新驾驶员
+        public int UptDeriver(Driver driver)
+        {
+            var t1 = db.Updateable(driver).ExecuteCommand();
+            return t1;
+        }
+        //详情页
+        public List<Driver> GetDetails(int id)
+        {
+            List<Driver> list = db.Queryable<Driver>().Where(x => x.DId == id).ToList();
+
+            //if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
+            //{
+            //    theCarrierSingleNumber = theCarrierSingleNumber.Trim();
+            //    list = list.Where(t => t.TheCarrierSingleNumber == theCarrierSingleNumber).ToList();
+            //}
+            //if (!string.IsNullOrWhiteSpace(ConsigneeTel))
+            //{
+            //    ConsigneeTel = ConsigneeTel.Trim();
+            //    list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
+            //}
+            //list = list.Skip((page - 1) * limit).Take(limit).ToList();
+            //var model = new
+            //{
+            //    page = list,
+            //    limit = limit,
+            //};
+
             return list;
         }
         //删除车辆(假删)
@@ -176,6 +225,7 @@ namespace Dal
      
             return flag;
         }
+
     }
 }
 

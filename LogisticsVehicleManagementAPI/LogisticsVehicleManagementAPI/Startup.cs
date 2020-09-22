@@ -19,7 +19,6 @@ namespace LogisticsVehicleManagementAPI
         {
             services.AddControllers();
             services.AddSingleton<IVehicleManagement, VehicleManagement>();
-
             //配置跨域处理，允许所有来源：
             services.AddCors(options =>
             options.AddPolicy("cor",
@@ -35,7 +34,6 @@ namespace LogisticsVehicleManagementAPI
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors("cor");
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
