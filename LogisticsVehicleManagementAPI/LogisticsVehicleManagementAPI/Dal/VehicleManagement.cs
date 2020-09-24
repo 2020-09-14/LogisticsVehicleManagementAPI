@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using System.Xml.Linq;
@@ -64,7 +65,22 @@ namespace Dal
         public List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel)
         {
             List<TheCarrierSingle> list = db.Queryable<TheCarrierSingle>().ToList();
-
+            if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
+            {
+                theCarrierSingleNumber = theCarrierSingleNumber.Trim();
+                list = list.Where(t => t.TheCarrierSingleNumber == theCarrierSingleNumber).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(ConsigneeTel))
+            {
+                ConsigneeTel = ConsigneeTel.Trim();
+                list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
+            }
+            list = list.Skip((page - 1) * limit).Take(limit).ToList();
+            var model = new
+            {
+                page = list,
+                limit = limit,
+            };
             return list;
         }
         //显示驾驶员
@@ -102,51 +118,39 @@ namespace Dal
         {
             List<Driver> list = db.Queryable<Driver>().Where(x => x.DId == id).ToList();
 
-            //if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
-            //{
-            //    theCarrierSingleNumber = theCarrierSingleNumber.Trim();
-            //    list = list.Where(t => t.TheCarrierSingleNumber == theCarrierSingleNumber).ToList();
-            //}
-            //if (!string.IsNullOrWhiteSpace(ConsigneeTel))
-            //{
-            //    ConsigneeTel = ConsigneeTel.Trim();
-            //    list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
-            //}
-            //list = list.Skip((page - 1) * limit).Take(limit).ToList();
-            //var model = new
-            //{
-            //    page = list,
-            //    limit = limit,
-            //};
+            
 
             return list;
         }
-        //删除车辆(假删)
+        //删除车辆
         public string RemoveVehicle(string ids)
         {
-            VehicleManage list = new VehicleManage { Status = false };
+            
             var t7 = 0;
-            string ne = "";
-            for (int i = 0; i < ids.Length; i++)
+            
+            string[] strArray = ids.Split(',');
+            foreach (var item in strArray)
             {
-                if (ids[i].ToString()==",")
-                {
-                    
-                    continue;
-                }
-                t7 = db.Updateable(list).UpdateColumns(it => new { it.Status }).Where(p=>p.VehicleManageId==ids[i]).ExecuteCommand();
-               
-                if (t7==0)
-                {
-                    ne += ne + ids[i].ToString();
-                }
+                //删除车辆
+                t7+= db.Deleteable<VehicleManage>().Where(p=>p.VehicleManageId == Convert.ToInt32(item)).ExecuteCommand();
+                
+
             }
-            if (!string.IsNullOrEmpty(ne))
+            foreach (var item in strArray)
             {
-                return ne;
+                //删除车辆跟车队之间的关系
+                t7 += db.Deleteable<TheTeamRelationship>().Where(p=>p.Vidd== Convert.ToInt32(item)).ExecuteCommand();
             }
-            int t8 = db.Deleteable<TheTeamRelationship>().In(it => it.Vidd, new string[] { ids }).ExecuteCommand();
-            return "yes";
+            
+            if (t7 != 0)
+            {
+                return "yes";
+            }
+            else
+            {
+                return "no";
+            }
+            
         }
         //显示车队
         public List<FleetManagement> Fleet()
@@ -158,25 +162,37 @@ namespace Dal
         //删除车队.同删除车队关系
         public string RemoveMotorcade(string ids)
         {
-            FleetManagement list = new FleetManagement { Status = false };
+            VehicleManage list1 = new VehicleManage { Status = false };
+            
+            string[] strArray = ids.Split(',');
             var t7 = 0;
-            string ne = "";
-            for (int i = 0; i < ids.Length; i++)
+            //db.Updateable(list).UpdateColumns(it => new { it.Status }).Where(p => p.FleetManagementId == Convert.ToInt32(item)).ExecuteCommand();
+            foreach (var item in strArray)
             {
-                if (ids[i].ToString() == ",")
+                List<TheTeamRelationship> t8 = db.Queryable<TheTeamRelationship>().Where(p => p.Fidd == Convert.ToInt32(item)).ToList();
+                //删除车队
+                t7 += db.Deleteable<FleetManagement>().Where(p => p.FleetManagementId == Convert.ToInt32(item)).ExecuteCommand();
+                //删删除车队和车辆之间的关系
+                t7 += db.Deleteable<TheTeamRelationship>().Where(it=>it.Fidd==Convert.ToInt32(item)).ExecuteCommand();
+                //修改车辆的状态（改为空闲）
+                foreach (var inte in t8)
                 {
-                    continue;
+                    t7 += db.Updateable(list1).UpdateColumns(it => new { it.Status }).Where(p => p.VehicleManageId == inte.Vidd).ExecuteCommand();
                 }
-                var t5 = db.Updateable(list).UpdateColumns(it => new { it.Status }).Where(p => p.FleetManagementId ==  ids[i]).ExecuteCommand();
-               //t7 = db.Updateable(list).UpdateColumns(it => new { it.Status }).Where(p => p.VehicleManageId == ids[i]).ExecuteCommand();
                
-                if (t7 == 0)
-                {
-                    ne += ne + ids[i].ToString();
-                }
             }
-            var t4 = db.Deleteable<TheTeamRelationship>().In(it => it.Fidd, new string[] { ids }).ExecuteCommand();
-            return t4.ToString();
+           
+            if (t7 != 0)
+            {
+                return "yes";
+            }
+            else
+            {
+                return "no";
+            }
+            
+            
+           
         }
         //添加车队
         public int AddModtorcade(FleetManagement f, string ids)
@@ -207,6 +223,85 @@ namespace Dal
             return j;
             
         }
+
+        //修改车辆
+        public int Upt(VehicleManage m)
+        {
+            var sql = new VehicleManage() { VehicleManageId=m.VehicleManageId, Licenseplatenumber = m.Licenseplatenumber, ModelofCar = m.ModelofCar, Manufacturer = m.Manufacturer, CarColour = m.CarColour, PurchasePrice = m.PurchasePrice, Tonnage = m.Tonnage, Displacement = m.Displacement, VehicleType = m.VehicleType, Status = m.Status };
+            int i = db.Updateable(sql).ExecuteCommand();
+            return i;
+        }
+        //车辆车队关系表
+        public List<TheTeamRelationship> theTeams(string ids)
+        {
+            List<TheTeamRelationship> list = db.Queryable<TheTeamRelationship>().ToList();
+            list = list.Where(p => p.Fidd == Convert.ToInt32(ids)).ToList();
+            return list;
+        }
+        //修改的反填车辆
+        public List<VehicleManage> TianUpt()
+        {
+            List<VehicleManage> list = db.Queryable<VehicleManage>().ToList();
+           
+            return list;
+        }
+        //修改的反填车辆
+        public List<VehicleManage> TiaoUpt2(string ids)
+        {
+            var v1=db.Queryable<VehicleManage,TheTeamRelationship>((st,sc)=> new JoinQueryInfos(JoinType.Left,st.VehicleManageId==sc.Vidd)).Where("Status = 0 or Fidd = @ids ", new { ids = $"{ids}" }).ToList();
+            
+            return v1;
+        }
+        //反填车队
+        public List<FleetManagement> UptFleeShow(string ids)
+        {
+            List<FleetManagement> list = db.Queryable<FleetManagement>().Where(p=>p.FleetManagementId==Convert.ToInt32(ids)).ToList();
+          
+            return list;
+        }
+        //修改车队
+        public string UptMoodtorcade(FleetManagement f, string ids)
+        {
+            VehicleManage list = new VehicleManage { Status = true };
+            //删除相关联的关系表
+            int page= db.Deleteable<TheTeamRelationship>().Where(it=>it.Fidd==f.FleetManagementId).ExecuteCommand();
+            int j = 0;
+            
+            string[] strArray = ids.Split(',');
+            foreach (var item in strArray)
+            {
+                string inetr=  item.ToString();
+                //添加新的和车辆的关系表
+                var sql = new TheTeamRelationship() { Fidd = f.FleetManagementId, Vidd = Convert.ToInt32(inetr) };
+                //把车辆改为使用中，（别的车队就用不了）
+                j += db.Updateable(list).UpdateColumns(it => new { it.Status }).Where(p => p.VehicleManageId ==Convert.ToInt32(item)).ExecuteCommand();
+                page += db.Insertable(sql).ExecuteCommand();
+            }
+
+            //修改车队信息
+            var son = new FleetManagement { PersonNumber = f.PersonNumber, Principal = f.Principal, PrincipalPhone = f.PrincipalPhone, Serialnumber = f.Serialnumber, TheteamName = f.TheteamName, vehicles = j };
+            page += db.Updateable(son).ExecuteCommand();
+            if (page != 0)
+            {
+                //成功
+                return "yes";
+            }
+            else
+            {
+                return "No";
+            }
+            
+            
+        }
+        //详情
+        public List<VehicleManage> Xq(string ids)
+        {
+            //查询车队下的车辆有哪些
+            var v1 = db.Queryable<VehicleManage, TheTeamRelationship>((st, sc) => new JoinQueryInfos(JoinType.Left, st.VehicleManageId == sc.Vidd)).Where(" Fidd = @ids ", new { ids = $"{ids}" }).ToList();
+
+            return v1;
+        }
+
      
         //删除承运单
         public int DeltheCarrierSingles(string ids)
@@ -226,6 +321,7 @@ namespace Dal
             return flag;
         }
 
+       
     }
 }
 

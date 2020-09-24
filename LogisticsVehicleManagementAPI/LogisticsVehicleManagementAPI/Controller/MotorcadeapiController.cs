@@ -87,5 +87,54 @@ namespace LogisticsVehicleManagementAPI.Controller
 
             return Ok(json);
         }
+        //修改车辆
+        [Route("/api/CarUpt")]
+        [HttpPost]
+        public IActionResult actionResult([FromForm]VehicleManage m)
+        {
+            int i = vehicle.Upt(m);
+            return Ok(i);
+        }
+        //反填车队（车辆信息）
+        [Route("/api/CarTianCheck")]
+        [HttpGet]
+        public IActionResult CarTianCheck([FromQuery]string ids)
+        { 
+            
+            return Ok(JsonConvert.SerializeObject(vehicle.theTeams(ids)));
+        }
+        //修改反填车队
+        [Route("/api/UptFleeShow")]
+        [HttpGet]
+        public IActionResult UptFleeShow([FromQuery]string ids)
+        {
+            string json = JsonConvert.SerializeObject(vehicle.UptFleeShow(ids));
+            return Ok(json);
+        }
+        //修改反填车辆
+        [Route("/api/CarTianUpt")]
+        [HttpGet] 
+        public IActionResult CarTiaoUpt([FromQuery]string ids) 
+        {
+            string sql = JsonConvert.SerializeObject(vehicle.TiaoUpt2(ids));
+            return Ok(sql);
+        }
+      
+        //修改车队
+        [Route("/api/UptMored")]
+        [HttpPost]
+        public IActionResult UptMoodtorcade([FromForm]FleetManagement m, [FromForm] string ids)
+        {
+            string i = vehicle.UptMoodtorcade(m,ids);
+            return Ok(i);
+        }
+        //修改反填车辆
+        [Route("/api/Xq")]
+        [HttpGet]
+        public IActionResult Xq([FromQuery] string ids)
+        {
+            string sql = JsonConvert.SerializeObject(vehicle.Xq(ids));
+            return Ok(sql);
+        }
     }
 }
