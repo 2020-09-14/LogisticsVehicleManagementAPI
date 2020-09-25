@@ -32,7 +32,7 @@ namespace Dal
 
 
         //显示承运单
-        List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier);
+        List<TheCarrierSingle> theCarrierSingles(string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier);
         //删除承运单
         int DeltheCarrierSingles(string ids);
         //显示车辆

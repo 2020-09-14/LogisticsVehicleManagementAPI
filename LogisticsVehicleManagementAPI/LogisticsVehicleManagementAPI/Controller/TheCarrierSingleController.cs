@@ -25,9 +25,10 @@ namespace LogisticsVehicleManagementAPI.Controller
         [HttpGet]
         public IActionResult  GettheCarrierSingles(int page,int limit,[FromQuery] string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier)
         {
-            List<TheCarrierSingle> theCarrierSingles = _vehicleManagement.theCarrierSingles(page,limit,theCarrierSingleNumber,ConsigneeTel, ReceiveTheCarrier);
-  
-            JsonData json = new JsonData() { code = 0, msg = "", count = 100, data = theCarrierSingles };
+            List<TheCarrierSingle> theCarrierSingles = _vehicleManagement.theCarrierSingles(theCarrierSingleNumber,ConsigneeTel, ReceiveTheCarrier);
+            var count = theCarrierSingles.Count;
+            theCarrierSingles = theCarrierSingles.Skip((page - 1) * limit).Take(limit).ToList();
+            JsonData json = new JsonData() { code = 0, msg = "", count = count+1, data = theCarrierSingles };
             return Ok(json);
         }
         [Route("/api/Del")]

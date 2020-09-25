@@ -59,9 +59,10 @@ namespace Dal
         }
 
         //接口生成承运单方法
-        public List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier)
+        public List<TheCarrierSingle> theCarrierSingles(string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier)
         {
             List<TheCarrierSingle> list = db.Queryable<TheCarrierSingle>().ToList();
+
             if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
             {
                 theCarrierSingleNumber = theCarrierSingleNumber.Trim();
@@ -81,12 +82,8 @@ namespace Dal
                 list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
 
             }
-            list = list.Skip((page - 1) * limit).Take(limit).ToList();
-            var model = new
-            {
-                page = list,
-                limit = limit,
-            };
+       
+        
             return list;
         }
         //显示驾驶员
