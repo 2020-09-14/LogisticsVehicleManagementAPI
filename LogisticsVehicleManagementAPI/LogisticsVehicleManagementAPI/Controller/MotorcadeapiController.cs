@@ -7,6 +7,7 @@ using Dal;
 using LogisticsVehicleManagementAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace LogisticsVehicleManagementAPI.Controller
@@ -23,11 +24,22 @@ namespace LogisticsVehicleManagementAPI.Controller
         //车辆显示
         [HttpGet]
         [Route("/api/Show")]
-        public IActionResult Show(string name)
+        public IActionResult Show(string name,int page=0,int rows=0)
         {
             List<VehicleManage> list = vehicle.Show(name);
-            string json = JsonConvert.SerializeObject(list);
-            return Ok(json); ;
+            int Tocount = list.Count;
+            if (page != 0 && rows != 0)
+            {
+                list = list.Skip((page - 1) * rows).Take(rows).ToList();
+            }
+            //string json = JsonConvert.SerializeObject(list);
+            var model = new
+            {
+                count = Tocount,
+                list = list
+            };
+            
+            return Ok(model);
         }
         [Route("/api/AddCar")]
         //添加车辆
