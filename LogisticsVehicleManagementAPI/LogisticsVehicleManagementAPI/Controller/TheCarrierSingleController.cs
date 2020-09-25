@@ -23,9 +23,9 @@ namespace LogisticsVehicleManagementAPI.Controller
             _vehicleManagement = vehicleManagement;
         }
         [HttpGet]
-        public IActionResult  GettheCarrierSingles(int page,int limit,[FromQuery] string theCarrierSingleNumber,string ConsigneeTel)
+        public IActionResult  GettheCarrierSingles(int page,int limit,[FromQuery] string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier)
         {
-            List<TheCarrierSingle> theCarrierSingles = _vehicleManagement.theCarrierSingles(page,limit,theCarrierSingleNumber,ConsigneeTel);
+            List<TheCarrierSingle> theCarrierSingles = _vehicleManagement.theCarrierSingles(page,limit,theCarrierSingleNumber,ConsigneeTel, ReceiveTheCarrier);
   
             JsonData json = new JsonData() { code = 0, msg = "", count = 100, data = theCarrierSingles };
             return Ok(json);
@@ -38,5 +38,14 @@ namespace LogisticsVehicleManagementAPI.Controller
             int code = _vehicleManagement.DeltheCarrierSingles(ids);
             return Ok(code);
         }
+        [Route("/api/Add")]
+        [HttpPost]
+        public IActionResult AddtheCarrierSingles([FromForm] TheCarrierSingle the)
+        {
+            int code = _vehicleManagement.AddtheCarrierSingles(the);
+            return Ok(code);
+        }
+
+      
     }
 }

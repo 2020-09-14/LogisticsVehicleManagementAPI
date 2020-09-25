@@ -26,8 +26,13 @@ namespace Dal
 
         //详情
         List<Driver> GetDetails(int id);
+
+        //添加承运单
+        int AddtheCarrierSingles(TheCarrierSingle the);
+
+
         //显示承运单
-        List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel);
+        List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier);
         //删除承运单
         int DeltheCarrierSingles(string ids);
         //显示车辆
@@ -51,6 +56,12 @@ namespace Dal
         //添加车队 同添加关系表（多条）
         int AddModtorcade(FleetManagement f, string ids);
 
+        
+
+     
+
+
+
         //显示承运单
       
         //查询车队车辆关系表
@@ -62,6 +73,7 @@ namespace Dal
         List<FleetManagement> UptFleeShow(string ids);
         //详情
         public List<VehicleManage> Xq(string ids);
+
 
 
     }

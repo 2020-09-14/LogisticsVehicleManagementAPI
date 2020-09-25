@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using System.Xml.Linq;
-
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Threading;
 
@@ -53,16 +53,13 @@ namespace Dal
         public int AddCar([FromForm]VehicleManage m)
         {
 
-
-
-
             var sql = new VehicleManage() { Licenseplatenumber = m.Licenseplatenumber, ModelofCar = m.ModelofCar, Manufacturer = m.Manufacturer, CarColour = m.CarColour, PurchasePrice = m.PurchasePrice, Tonnage = m.Tonnage, Displacement = m.Displacement, VehicleType = m.VehicleType, Status = m.Status };
             int i = db.Insertable(sql).ExecuteCommand();
             return i;
         }
 
         //接口生成承运单方法
-        public List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel)
+        public List<TheCarrierSingle> theCarrierSingles(int page, int limit,string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier)
         {
             List<TheCarrierSingle> list = db.Queryable<TheCarrierSingle>().ToList();
             if (!string.IsNullOrWhiteSpace(theCarrierSingleNumber))
@@ -73,7 +70,16 @@ namespace Dal
             if (!string.IsNullOrWhiteSpace(ConsigneeTel))
             {
                 ConsigneeTel = ConsigneeTel.Trim();
+
+                list = list.Where(t => t.ConsigneeTel == ConsigneeTel).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(ReceiveTheCarrier))
+            {
+                ReceiveTheCarrier = ReceiveTheCarrier.Trim();
+                list = list.Where(t => t.ReceiveTheCarrier == Convert.ToInt32(ReceiveTheCarrier)).ToList();
+
                 list = list.Where(t => t.ConsigneeTel == theCarrierSingleNumber).ToList();
+
             }
             list = list.Skip((page - 1) * limit).Take(limit).ToList();
             var model = new
@@ -320,6 +326,37 @@ namespace Dal
      
             return flag;
         }
+        //承运单添加
+        public int AddtheCarrierSingles(TheCarrierSingle the)
+        {
+            var rand=(DateTime.Now).ToString("yyyyMMdd");
+            for (int i = 0; i < 1; i++)
+            {
+                Random rd = new Random();
+                rand += rd.Next().ToString();
+            }
+
+            var sql = new TheCarrierSingle()
+            {
+                TheCarrierSingleNumber = rand,
+                TypeOfGoods = the.TypeOfGoods,
+                TheCarrierFleet = the.TheCarrierFleet,
+                TheCarrierVehicle = the.TheCarrierVehicle,
+                DriversName = the.DriversName,
+                Moneys = the.Moneys,
+                ReceiveTheCarrier = 2,
+                ConsignerName = the.ConsignerName,
+                ConsignerAddress = the.ConsignerAddress,
+                ConsignerTel = the.ConsignerTel,
+                ConsigneeName = the.ConsigneeName,
+                ConsigneeAddress = the.ConsigneeAddress,
+                ConsigneeTel = the.ConsigneeTel,
+                TheCarrierSingleTimes = DateTime.Now
+            };
+            int code = db.Insertable(sql).ExecuteCommand();
+            return code;
+            
+         }
 
        
     }

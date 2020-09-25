@@ -221,4 +221,4 @@ C:\Users\86176\Desktop\新建文件夹\LogisticsVehicleManagementAPI\LogisticsVe
 C:\Users\86176\Desktop\新建文件夹\LogisticsVehicleManagementAPI\LogisticsVehicleManagementAPI\obj\Debug\netcoreapp3.1\LogisticsVehicleManagementAPI.dll
 C:\Users\86176\Desktop\新建文件夹\LogisticsVehicleManagementAPI\LogisticsVehicleManagementAPI\obj\Debug\netcoreapp3.1\LogisticsVehicleManagementAPI.pdb
 C:\Users\86176\Desktop\新建文件夹\LogisticsVehicleManagementAPI\LogisticsVehicleManagementAPI\obj\Debug\netcoreapp3.1\LogisticsVehicleManagementAPI.genruntimeconfig.cache
-C:\Users\T\Desktop\项目API\LogisticsVehicleManagementAPI\LogisticsVehicleManagementAPI\obj\Debug\netcoreapp3.1\LogisticsVehicleManagementAPI.csprojAssemblyReference.cache
+C:\Users\86176\Desktop\新建文件夹\LogisticsVehicleManagementAPI\LogisticsVehicleManagementAPI\obj\Debug\netcoreapp3.1\LogisticsVehicleManagementAPI.csprojAssemblyReference.cache
