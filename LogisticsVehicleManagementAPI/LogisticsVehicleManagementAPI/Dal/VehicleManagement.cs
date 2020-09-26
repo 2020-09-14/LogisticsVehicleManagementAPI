@@ -25,9 +25,41 @@ namespace Dal
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true,
 
-
                 //InitKeyType = InitKeyType.Attribute
             });
+
+        public int AddCost(Cost cost)
+        {
+            int i = db.Insertable(cost).ExecuteCommand();
+            return i;
+        }
+
+        public int DeleteCost(int Ids)
+        {
+            var aa = db.Deleteable<Cost>().Where(it => it.Id == Ids).ExecuteCommand();
+
+            return aa;
+        }
+
+        public List<Cost> FanCost(int ids)
+        {
+            List<Cost> list = db.Queryable<Cost>().Where(it => it.Id == ids).ToList();
+            return list;
+
+        }
+        public List<Cost> GetCost()
+        {
+            List<Cost> list = db.Queryable<Cost>().ToList();
+            return list;
+        }
+
+        
+
+
+
+                //InitKeyType = InitKeyType.Attribute
+          
+
 
        
 
@@ -262,6 +294,15 @@ namespace Dal
           
             return list;
         }
+
+
+        public int Update(Cost m)
+        {
+            var list = new Cost { Fuel = m.Fuel, Repair = m.Repair, Through = m.Through, Depreciation = m.Depreciation, Other = m.Other, Id = m.Id };
+            int i = db.Updateable(list).ExecuteCommand();
+            return i;
+        }
+
         //修改车队
         public string UptMoodtorcade(FleetManagement f, string ids)
         {
@@ -356,6 +397,7 @@ namespace Dal
          }
 
        
+
     }
 }
 

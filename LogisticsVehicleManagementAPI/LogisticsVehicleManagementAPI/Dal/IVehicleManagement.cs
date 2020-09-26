@@ -32,6 +32,34 @@ namespace Dal
 
 
         //显示承运单
+
+        //List<TheCarrierSingle> theCarrierSingles();
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        int AddCost(Cost cost);
+        /// <summary>
+        /// 显示
+        /// </summary>
+        /// <returns></returns>
+        List<Cost> GetCost();
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        int DeleteCost(int ids);
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        int Update(Cost m);
+        //反填
+        List<Cost> FanCost(int ids);
+
         List<TheCarrierSingle> theCarrierSingles(string theCarrierSingleNumber,string ConsigneeTel,string ReceiveTheCarrier);
         //删除承运单
         int DeltheCarrierSingles(string ids);
@@ -73,6 +101,7 @@ namespace Dal
         List<FleetManagement> UptFleeShow(string ids);
         //详情
         public List<VehicleManage> Xq(string ids);
+
 
 
 
