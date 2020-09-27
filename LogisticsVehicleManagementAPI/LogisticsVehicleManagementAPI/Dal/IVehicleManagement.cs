@@ -103,7 +103,12 @@ namespace Dal
         public List<VehicleManage> Xq(string ids);
 
 
-
+        //注册
+        public int Boarding(Administrator de);
+        //登录
+        public int Login(string SName, string SPwd);
+        //修改账号密码
+        public int Amend(string Cipher, string IDnumber, string Phone);
 
     }
 }

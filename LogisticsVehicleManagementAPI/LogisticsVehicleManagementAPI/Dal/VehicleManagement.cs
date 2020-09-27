@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Threading;
-
+using LogisticsVehicleManagementAPI.Helper;
 
 namespace Dal
 {
@@ -396,7 +396,39 @@ namespace Dal
             
          }
 
-       
+
+        //注册
+        public int Boarding(Administrator de)
+        {
+            var Mi = Md5Helper.ToMd5(de.Cipher);
+            var sql = new Administrator() { Cipher = Mi, LoginID = de.LoginID, Phone = de.Phone, IDnumber = de.IDnumber };
+
+            return db.Insertable(sql).ExecuteCommand();
+        }
+
+        //登录
+        public int Login(string SName, string SPwd)
+        {
+            string Mi = Md5Helper.ToMd5(SPwd);
+            List<Administrator> lie = db.Queryable<Administrator>().Where(st => st.LoginID == SName && st.Cipher == Mi).ToList();
+            if (lie.Count > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        //修改账号密码
+        public int Amend(string Cipher, string IDnumber, string Phone)
+        {
+            var Mi = Md5Helper.ToMd5(Cipher);
+            Administrator list = new Administrator() { Cipher = Mi };
+
+            return db.Updateable(list).UpdateColumns(st => new { st.Cipher }).Where(st => st.Phone == Phone && st.IDnumber == IDnumber).ExecuteCommand();
+        }
 
     }
 }
